@@ -55,8 +55,8 @@ imgP = read_Yframe ('foreman_qcif.y',144,176, 174);
 %     EScomputations(i+1) = computations;
 
 %     % Three Step Search
-%     [motionVect,computations ] = motionEstTSS(imgP,imgI,mbSize,p);
-%     imgComp = motionComp(imgI, motionVect, mbSize);
+%      [motionVect,computations] = motionEstTSS(imgP,imgI,mbSize,p);
+%      imgComp = motionComp(imgI, motionVect, mbSize);
 %     TSSpsnr(i+1) = imgPSNR(imgP, imgComp, 255);
 %     TSScomputations(i+1) = computations;
 % 

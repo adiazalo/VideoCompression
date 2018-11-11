@@ -19,6 +19,7 @@ function [motionVect, EScomputations] = motionEstES(imgP, imgI, mbSize, p)
 vectors = zeros(2,row*col/mbSize^2);
 
 costs = ones(2*p + 1, 2*p +1) * 65537;
+disp(costs)
 
 computations = 0;
 
@@ -65,6 +66,6 @@ for i = 1 : mbSize : row-mbSize+1
 end
 
 motionVect = vectors;
-quiver(vectors(2,:),vectors(1,:));
+
 EScomputations = computations/(mbCount - 1);
                     
