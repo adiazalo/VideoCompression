@@ -38,4 +38,7 @@ for i = 1:mbSize:row-mbSize+1
     end
 end
 
+k = mat2gray(imageComp);
+figure;
+imshow(k);
 imgComp = imageComp;
