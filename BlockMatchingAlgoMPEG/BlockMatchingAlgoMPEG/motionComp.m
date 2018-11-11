@@ -38,4 +38,12 @@ for i = 1:mbSize:row-mbSize+1
     end
 end
 
+mvx_v = motionVect(2,:);
+mvy_v = motionVect(1,:);
+mvx = vec2mat(mvx_v,176);
+mvy = vec2mat(mvy_v,176);
+quiver(mvx,mvy);
+k = mat2gray(imageComp);
+figure;
+imshow(k);
 imgComp = imageComp;
