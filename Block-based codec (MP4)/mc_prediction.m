@@ -1,6 +1,9 @@
 function [mcpr,pred] = mc_prediction(prevInput,currInput,mvx,mvy)
 prevTemp = imread(prevInput);
 prev = rgb2gray(prevTemp);
+whos prev
+imwrite(prev, 'test.jpg');
+
 currTemp = imread(currInput);
 curr = rgb2gray(currTemp);
 [rFrame,cFrame] = size(curr);
@@ -36,8 +39,10 @@ while cIndex<cFrame
     rIndex = 1;
     cIndex = cIndex + blkx;
 end
-
- write_Yframe(pred, 'dustpan_pred_frame.jpg');
- k = mat2gray(pred);
- figure;
- imshow(k);
+whos pred
+imwrite(uint8(pred), 'dustpan_pred_frame.jpg');
+imwrite(uint8(mcpr), 'dustpan_mcpr_frame.jpg');
+%  write_Yframe(pred, 'dustpan_pred_frame.jpg');
+%  k = mat2gray(pred);
+%  figure;
+%  imshow(k);
