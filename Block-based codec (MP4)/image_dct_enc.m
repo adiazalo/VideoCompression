@@ -1,7 +1,8 @@
 function Nbits = image_dct_enc(infile,bitfile,quality)
 [qt, zag] = init_jpeg(quality);
-imgDouble_512x512 = imread(infile);
-imgDouble_512x512 = double(imgDouble_512x512) - 128;
+imgDouble_1080x1920_temp = imread(infile);
+imgDouble_1080x1920 = rgb2gray(imgDouble_1080x1920_temp);
+imgDouble_1080x1920 = double(imgDouble_1080x1920) - 128;
 
 % D = dctmtx(8); %Calculate the discrete cosine transform matrix
 % dct = @(block_struct) D * block_struct.data * D';
@@ -31,7 +32,7 @@ while rIndex<512
     while cIndex<512
         
         % transform the block using 8x8 DCT
-        tempBlock8x8 =  imgDouble_512x512(rIndex:rIndex+7,cIndex:cIndex+7);
+        tempBlock8x8 =  imgDouble_1080x1920(rIndex:rIndex+7,cIndex:cIndex+7);
         tempBlock8x8_DCT = dct(tempBlock8x8);
         
         %quantize it using JPEG-like quantizers
@@ -70,7 +71,7 @@ imgq_1x262144 = round(imgq_1x262144);
 %% header info
 disp("header info")
 header_fid = fopen('img_header.hdr','wb');
-[imgR,imgC] = size(imgDouble_512x512);
+[imgR,imgC] = size(imgDouble_1080x1920);
 min_index = abs(min_index);
 fwrite(header_fid,[imgR imgC],'uint16');
 fwrite(header_fid,[quality min_index],'uint16');
