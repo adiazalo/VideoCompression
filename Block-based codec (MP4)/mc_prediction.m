@@ -1,5 +1,8 @@
-function [mcpr,pred] = mc_prediction(prev,curr,mvx,mvy)
-
+function [mcpr,pred] = mc_prediction(prevInput,currInput,mvx,mvy)
+prevTemp = imread(prevInput);
+prev = rgb2gray(prevTemp);
+currTemp = imread(currInput);
+curr = rgb2gray(currTemp);
 [rFrame,cFrame] = size(curr);
 [rV,cV] = size(mvx);
 blky = rFrame/rV;
