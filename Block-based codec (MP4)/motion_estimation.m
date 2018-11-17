@@ -1,5 +1,13 @@
-function [mvx,mvy] = motion_estimation(prev, curr, blkx, blky, search_range)
-[currFrRow, currFrCol] = size(curr);
+function [mvx,mvy] = motion_estimation(prevInput, currInput, blkx, blky, search_range)
+prevTemp = imread(prevInput);
+prev = rgb2gray(prevTemp);
+k = mat2gray(prev);
+figure;
+imshow(k);
+currTemp = imread(currInput);
+curr = rgb2gray(currTemp);
+whos prev
+[currFrRow, currFrCol] = size(curr)
 %SAD_Matrix = zeros(1+2*(search_range/blky),1+2*(search_range/blkx))
 SAD_Matrix = zeros(currFrRow/blky,currFrCol/blkx);
 SAD_elements = numel(SAD_Matrix);
@@ -18,13 +26,13 @@ rIndex = 1;
 cIndex = 1;
 rWinIndex = 1;
 cWinIndex = 1;
-while cIndex<176
-    while rIndex<144
+while cIndex<1920
+    while rIndex<1080
         %extract block from curr
         currBlk = curr(rIndex:rIndex+blky-1, cIndex:cIndex+blkx-1);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        while cWinIndex<176
-            while rWinIndex<144
+        while cWinIndex<1920
+            while rWinIndex<1080
                 
                 % check if window is in range
                 if abs(rIndex-rWinIndex) <= search_range && abs(cIndex-cWinIndex) <= search_range
@@ -39,9 +47,9 @@ while cIndex<176
                     end
                     
                     %test
-                    if rIndex == 41 && cIndex == 41
-                        Test = SAD_Matrix;
-                    end
+%                     if rIndex == 41 && cIndex == 41
+%                         Test = SAD_Matrix;
+%                     end
                 end
                 
                 if n<SAD_elements
@@ -98,7 +106,7 @@ while cIndex<176
      rIndex = 1;
      cIndex = cIndex + blkx;
 end
-% quiver(mvx,mvy)
+ quiver(mvx,mvy)
 % disp(Test)
 clearvars -except mvx mvy;
 

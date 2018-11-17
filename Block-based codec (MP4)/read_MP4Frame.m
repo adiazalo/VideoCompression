@@ -7,6 +7,7 @@ while hasFrame(ReadObj)
     CurFrame = CurFrame+1;
     if ismember(CurFrame, GetFrame)
         imwrite(CurImage, sprintf('frame%d.jpg', CurFrame));
+        whos CurFrame
         frameMP4 = sprintf('frame%d.jpg', CurFrame);
     end
 end
