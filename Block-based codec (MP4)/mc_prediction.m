@@ -49,6 +49,8 @@ imwrite(uint8(mcpr), 'dustpan_mcpr_frame.jpg');
 
 mcpr = sprintf('dustpan_mcpr_frame.jpg');
 
+clearvars -except mcpr pred;
+
 %  write_Yframe(pred, 'dustpan_pred_frame.jpg');
 %  k = mat2gray(pred);
 %  figure;

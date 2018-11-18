@@ -1,5 +1,6 @@
-function frameMP4 = read_MP4Frame (infile, frame_index)
+function [frameMP4,frameRate] = read_MP4Frame (infile, frame_index)
 ReadObj = VideoReader(infile); 
+frameRate = ReadObj.FrameRate;
 CurFrame = 0;
 GetFrame = [0 frame_index];
 % disp('h')
@@ -14,4 +15,4 @@ while hasFrame(ReadObj)
         frameMP4 = sprintf('frame%d.jpg', CurFrame);
     end
 end
-% disp('h4')
+clearvars -except frameMP4;

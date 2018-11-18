@@ -1,6 +1,16 @@
+i=1;
+j=2;
 
-frame1 = read_MP4Frame ('natalie_1.mp4', 1);
-frame2 = read_MP4Frame ('natalie_1.mp4', 2);
+[frameInit,frameRate] = read_MP4Frame('natalie_1.mp4',1);
+
+outputVideo = VideoWriter(fullfile(natalie_1_out.avi));
+outputVideo.FrameRate = frameRate;
+open(outputVideo);
+
+while j< 30
+
+frame1 = read_MP4Frame('natalie_1.mp4',i);
+frame2 = read_MP4Frame('natalie_1.mp4',j);
 
 disp("motion_estimation")
 [mvx,mvy] = motion_estimation(frame1, frame2, 24, 24, 24);
@@ -18,8 +28,12 @@ img_dec = image_dct_dec('dct.bit','frame_dec.jpg');
 reconst = img_dec + pred;
 
 imwrite(reconst, 'natalie_1_reconst.jpg');
+img = imread('natalie_1_reconst.jpg');
+writeVideo(outputVideo,img);
 
-k = mat2gray(reconst);
-figure;
-imshow(k);
+end
+close(outputVideo);
+% k = mat2gray(reconst);
+% figure;
+% imshow(k);
 

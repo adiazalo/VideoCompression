@@ -28,7 +28,7 @@ for qIndex = 1:64
 end
 
 %% loop through the image extracting non-overlapping 8x8 blocks
-% disp("loop through the image extracting non-overlapping 8x8 blocks")
+disp("loop through the image extracting non-overlapping 8x8 blocks")
 nextblockNum = 1;
 while rIndex<imgR
     while cIndex<imgC
@@ -57,21 +57,21 @@ while rIndex<imgR
     rIndex = rIndex + 8;
 end
 %% differential pulse code modulation
-% disp("differential pulse code modulation")
+disp("differential pulse code modulation")
 for rIndex=2:115200
     imgq_115200x64(rIndex,1) = imgq_115200x64(rIndex,1) - imgq_115200x64(rIndex-1,1);
 end
 
 %% shifting
-% disp("shifting")
+disp("shifting")
 min_index = min(min(imgq_115200x64))
 imgq_115200x64 = abs(min_index) + imgq_115200x64 + 1;
 
-imgq_1x7372800 = reshape(imgq_115200x64',[1,7372800]);
-imgq_1x7372800 = round(imgq_1x7372800);
+imgq_1x2073600 = reshape(imgq_115200x64',[1,2073600]);
+imgq_1x2073600 = round(imgq_1x2073600);
 
 %% header info
-% disp("header info")
+disp("header info")
 header_fid = fopen('img_header.hdr','wb');
 [imgR,imgC] = size(imgDouble_1920x3840);
 min_index = abs(min_index);
@@ -80,16 +80,16 @@ fwrite(header_fid,[quality min_index],'uint16');
 fclose(header_fid);
 
 %% arith encoding
-% disp("arith encoding")
-minValue = min(imgq_1x7372800);
-maxValue = max(imgq_1x7372800);
+disp("arith encoding")
+minValue = min(imgq_1x2073600);
+maxValue = max(imgq_1x2073600);
 counts = zeros(1,maxValue);
-for scan = 1:7372800
-    scanValue = imgq_1x7372800(scan);
+for scan = 1:2073600
+    scanValue = imgq_1x2073600(scan);
     counts(scanValue) = counts(scanValue) + 1;
 end
 counts(counts<1) = 1;
 save('dct_hist','counts');
-Nbits = encArith(imgq_1x7372800,'dct_hist',bitfile);
+Nbits = encArith(imgq_1x2073600,'dct_hist',bitfile);
 
 clearvars -except Nbits;
