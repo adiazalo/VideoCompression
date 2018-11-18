@@ -1,9 +1,8 @@
-function VideoCoder(infile)
-a = 1;
-b = 2;
+function VideoCoder(vid)
+
 ReadObj = VideoReader(infile); 
 CurFrame = 0;
-GetFrame = [0 a b];
+GetFrame = [0 frame_index];
 while hasFrame(ReadObj)
     CurImage = readFrame(ReadObj);
     CurFrame = CurFrame+1;
@@ -12,7 +11,12 @@ while hasFrame(ReadObj)
         whos CurFrame
         frameMP4 = sprintf('frame%d.jpg', CurFrame);
     end
-    
+end
+
+while hasFrame(v)
+%     frame1 = read_MP4Frame(v, a);
+%     frame2 = read_MP4Frame(v, b);
+   
     [mvx,mvy] = motion_estimation(frame1, frame2, 8, 8, 16);
     [mcpr,pred] = mc_prediction(frame1,frame2,mvx,mvy);
     Nbits = image_dct_enc(mcpr,'dct.bit',90);
@@ -22,14 +26,7 @@ while hasFrame(ReadObj)
     
     a=a+1;
     b=b+1;
-    if b==3
+    if b==2
         break
     end
-    
-    
 end
-
-
-%     frame1 = read_MP4Frame(v, a);
-%     frame2 = read_MP4Frame(v, b);
-   

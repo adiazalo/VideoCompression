@@ -1,13 +1,9 @@
 function [mvx,mvy] = motion_estimation(prevInput, currInput, blkx, blky, search_range)
 prevTemp = imread(prevInput);
 prev = rgb2gray(prevTemp);
-k = mat2gray(prev);
-figure;
-imshow(k);
 currTemp = imread(currInput);
 curr = rgb2gray(currTemp);
-whos prev
-[currFrRow, currFrCol] = size(curr)
+[currFrRow, currFrCol] = size(curr);
 %SAD_Matrix = zeros(1+2*(search_range/blky),1+2*(search_range/blkx))
 SAD_Matrix = zeros(currFrRow/blky,currFrCol/blkx);
 SAD_elements = numel(SAD_Matrix);
@@ -106,7 +102,7 @@ while cIndex<1920
      rIndex = 1;
      cIndex = cIndex + blkx;
 end
- quiver(mvx,mvy)
+%  quiver(mvx,mvy)
 % disp(Test)
 clearvars -except mvx mvy;
 
