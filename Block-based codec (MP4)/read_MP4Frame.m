@@ -11,8 +11,7 @@ while hasFrame(ReadObj)
     if ismember(CurFrame, GetFrame)
 %         disp('h2')
         imwrite(CurImage, sprintf('frame%d.jpg', CurFrame));
-        whos CurFrame
         frameMP4 = sprintf('frame%d.jpg', CurFrame);
     end
 end
-clearvars -except frameMP4;
+clearvars -except frameMP4 frameRate;

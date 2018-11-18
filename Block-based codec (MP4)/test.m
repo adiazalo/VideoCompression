@@ -3,7 +3,7 @@ j=2;
 
 [frameInit,frameRate] = read_MP4Frame('natalie_1.mp4',1);
 
-outputVideo = VideoWriter(fullfile(natalie_1_out.avi));
+outputVideo = VideoWriter('natalie_1_out.avi');
 outputVideo.FrameRate = frameRate;
 open(outputVideo);
 
@@ -20,17 +20,20 @@ pred = uint8(pred);
 
 disp("image_dct_enc")
 %enc not good for natalie_1
-Nbits = image_dct_enc(mcpr,'dct.bit',50);
+Nbits = image_dct_enc(mcpr,'dct.bit',10);
 disp("image_dct_dec")
 img_dec = image_dct_dec('dct.bit','frame_dec.jpg');
 % whos img_dec
 % whos pred
 reconst = img_dec + pred;
 
+disp("writeVideo")
 imwrite(reconst, 'natalie_1_reconst.jpg');
 img = imread('natalie_1_reconst.jpg');
 writeVideo(outputVideo,img);
 
+i=i+1;
+j=j+1
 end
 close(outputVideo);
 % k = mat2gray(reconst);

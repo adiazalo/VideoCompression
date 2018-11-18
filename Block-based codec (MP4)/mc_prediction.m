@@ -4,7 +4,7 @@ prev = rgb2gray(prevTemp);
 
 currTemp = imread(currInput);
 curr = rgb2gray(currTemp);
-[rFrame,cFrame] = size(curr)
+[rFrame,cFrame] = size(curr);
 [rV,cV] = size(mvx);
 blky = rFrame/rV;
 blkx = cFrame/cV;
