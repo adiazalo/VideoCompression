@@ -4,7 +4,7 @@ prev = rgb2gray(prevTemp);
 
 currTemp = imread(currInput);
 curr = rgb2gray(currTemp);
-[rFrame,cFrame] = size(curr);
+[rFrame,cFrame] = size(curr)
 [rV,cV] = size(mvx);
 blky = rFrame/rV;
 blkx = cFrame/cV;
@@ -21,6 +21,13 @@ while cIndex<cFrame
         
         cPrevIndex = cIndex-mvx(n);
         rPrevIndex = rIndex-mvy(n);
+        
+%         disp(cIndex)
+%         disp(rIndex)
+%         disp(rPrevIndex)
+%         disp(cPrevIndex)
+%         disp(blky)
+%         disp(blkx)
 
         %extract the block from prev
         prevBlk = prev(rPrevIndex:rPrevIndex+blky-1, cPrevIndex:cPrevIndex+blkx-1);
