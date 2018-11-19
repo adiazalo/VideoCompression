@@ -4,7 +4,7 @@ j=2;
 disp("frameRate")
 [frameInit,frameRate] = read_MP4Frame('dustpan.mp4',1);
 
-disp("outputVideo")
+disp("motion_estimation")
 outputVideo = VideoWriter('dustpan_out.avi');
 outputVideo.FrameRate = frameRate;
 open(outputVideo);
