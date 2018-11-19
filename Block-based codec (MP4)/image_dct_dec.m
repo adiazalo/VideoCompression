@@ -10,28 +10,28 @@ min_index = (-1)*header(4);
 
 [qt, zag] = init_jpeg(quality);
 
-imgq_dec_691200x1 = decArith('dct_hist',bitfile);
-imgq_dec_1x691200 = imgq_dec_691200x1';
+imgq_dec_921600x1 = decArith('dct_hist',bitfile);
+imgq_dec_1x921600 = imgq_dec_921600x1';
 %% inverse shifting
-imgq_dec_10800x64 = reshape(imgq_dec_1x691200',[64,10800])';
-imgq_dec_10800x64 = imgq_dec_10800x64 - 1;
-imgq_dec_10800x64 = imgq_dec_10800x64 - round(abs(min_index));
+imgq_dec_14400x64 = reshape(imgq_dec_1x921600',[64,14400])';
+imgq_dec_14400x64 = imgq_dec_14400x64 - 1;
+imgq_dec_14400x64 = imgq_dec_14400x64 - round(abs(min_index));
 %% inverse DICM
-for rIndex = 10800:-1:2
-    imgq_dec_10800x64(rIndex,1) = imgq_dec_10800x64(rIndex,1) + imgq_dec_10800x64(rIndex-1,1);
+for rIndex = 14400:-1:2
+    imgq_dec_14400x64(rIndex,1) = imgq_dec_14400x64(rIndex,1) + imgq_dec_14400x64(rIndex-1,1);
 end
 %% inverse DCT
 tempBlock8x8 = ones(8);
-img_dec = zeros(720,960);
+img_dec = zeros(720,1280);
 rIndex = 1;
 cIndex = 1;
 nextBlockNum = 1;
 vec = ones(1,64);
 
-vecq = imgq_dec_10800x64(nextBlockNum,:);
+vecq = imgq_dec_14400x64(nextBlockNum,:);
 while rIndex<720
-    while cIndex<960
-        vecq = imgq_dec_10800x64(nextBlockNum,:);
+    while cIndex<1280
+        vecq = imgq_dec_14400x64(nextBlockNum,:);
         for qIndex = 1:64
             vec(qIndex) = round(vecq(qIndex).*qt(qIndex));
         end

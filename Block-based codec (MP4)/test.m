@@ -1,15 +1,15 @@
 j=2;
 disp("frameRate")
-[frame1,frameRate] = read_MP4Frame('sky.mp4',1);
+[frame1,frameRate] = read_MP4Frame('natalie.mp4',1);
 
 disp("outputVideo")
-outputVideo = VideoWriter('sky_out.avi');
+outputVideo = VideoWriter('natalie_out.avi');
 outputVideo.FrameRate = frameRate;
 open(outputVideo);
 
- while j< 10
+ while j< 271
 
-frame2 = read_MP4Frame('sky.mp4',j); 
+frame2 = read_MP4Frame('natalie.mp4',j); 
 
 disp("motion_estimation")
 [mvx,mvy] = motion_estimation(frame1, frame2, 16, 16, 16);
@@ -26,8 +26,8 @@ img_dec = image_dct_dec('dct.bit','frame_dec.jpg');
 reconst = img_dec + pred;
 
 disp("writeVideo")
-imwrite(reconst, 'sky_reconst.jpg');
-img = imread('sky_reconst.jpg');
+imwrite(reconst, 'natalie_reconst.jpg');
+img = imread('natalie_reconst.jpg');
 writeVideo(outputVideo,img);
 
 frame1 = frame2;

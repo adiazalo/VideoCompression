@@ -44,10 +44,10 @@ while cIndex<cFrame
     rIndex = 1;
     cIndex = cIndex + blkx;
 end
-imwrite(uint8(pred), 'dustpan_pred_frame.jpg');
-imwrite(uint8(mcpr), 'dustpan_mcpr_frame.jpg');
+imwrite(uint8(pred), 'natalie_pred_frame.jpg');
+imwrite(uint8(mcpr), 'natalie_mcpr_frame.jpg');
 
-mcpr = sprintf('dustpan_mcpr_frame.jpg');
+mcpr = sprintf('natalie_mcpr_frame.jpg');
 
 clearvars -except mcpr pred;
 
