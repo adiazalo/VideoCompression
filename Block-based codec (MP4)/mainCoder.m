@@ -3,7 +3,7 @@ disp("frameRate")
 [prev,frameRate] = read_MP4Frame('natalie.mp4',1);
 
 disp("outputVideo")
-outputVideo = VideoWriter('natalie_out.avi');
+outputVideo = VideoWriter('natalie_out.mp4','MPEG-4');%NEW
 outputVideo.FrameRate = frameRate;
 open(outputVideo);
 
