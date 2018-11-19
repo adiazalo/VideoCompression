@@ -22,13 +22,13 @@ rIndex = 1;
 cIndex = 1;
 rWinIndex = 1;
 cWinIndex = 1;
-while cIndex<1920
-    while rIndex<1080
+while cIndex<960
+    while rIndex<720
         %extract block from curr
         currBlk = curr(rIndex:rIndex+blky-1, cIndex:cIndex+blkx-1);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        while cWinIndex<1920
-            while rWinIndex<1080
+        while cWinIndex<960
+            while rWinIndex<720
                 
                 % check if window is in range
                 if abs(rIndex-rWinIndex) <= search_range && abs(cIndex-cWinIndex) <= search_range

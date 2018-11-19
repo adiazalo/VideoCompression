@@ -1,10 +1,10 @@
 function Nbits = image_dct_enc(infile,bitfile,quality)
 [qt, zag] = init_jpeg(quality);
-imgDouble_1080x1920 = imread(infile);
+imgDouble_720x960 = imread(infile);
 %imgDouble_1080x1920 = rgb2gray(imgDouble_1080x1920_temp);
-imgDouble_1080x1920 = double(imgDouble_1080x1920) - 128;
+imgDouble_720x960 = double(imgDouble_720x960) - 128;
 
-[imgR,imgC] = size(imgDouble_1080x1920);
+[imgR,imgC] = size(imgDouble_720x960);
 
 % D = dctmtx(8); %Calculate the discrete cosine transform matrix
 % dct = @(block_struct) D * block_struct.data * D';
@@ -19,7 +19,7 @@ imgDouble_1080x1920 = double(imgDouble_1080x1920) - 128;
 cIndex = 1;
 rIndex = 1;
 vecq_1x64 = ones(1,64);
-imgq_32400x64 = ones(32400,64);
+imgq_10800x64 = ones(10800,64);
 qtZag = ones(8);
 B_8x8 = ones(8);
 
@@ -34,7 +34,7 @@ while rIndex<imgR
     while cIndex<imgC
         
         % transform the block using 8x8 DCT
-        tempBlock8x8 =  imgDouble_1080x1920(rIndex:rIndex+7,cIndex:cIndex+7);
+        tempBlock8x8 =  imgDouble_720x960(rIndex:rIndex+7,cIndex:cIndex+7);
         tempBlock8x8_DCT = dct(tempBlock8x8);
         
         %quantize it using JPEG-like quantizers
@@ -49,7 +49,7 @@ while rIndex<imgR
         end
         
         %store it as a row in a matrix called imgq
-        imgq_32400x64(nextblockNum,:)=vecq_1x64; 
+        imgq_10800x64(nextblockNum,:)=vecq_1x64; 
         nextblockNum = nextblockNum + 1;
         cIndex = cIndex + 8;
     end
@@ -58,22 +58,22 @@ while rIndex<imgR
 end
 %% differential pulse code modulation
 % disp("differential pulse code modulation")
-for rIndex=2:32400
-    imgq_32400x64(rIndex,1) = imgq_32400x64(rIndex,1) - imgq_32400x64(rIndex-1,1);
+for rIndex=2:10800
+    imgq_10800x64(rIndex,1) = imgq_10800x64(rIndex,1) - imgq_10800x64(rIndex-1,1);
 end
 
 %% shifting
 % disp("shifting")
-min_index = min(min(imgq_32400x64))
-imgq_32400x64 = abs(min_index) + imgq_32400x64 + 1;
+min_index = min(min(imgq_10800x64))
+imgq_10800x64 = abs(min_index) + imgq_10800x64 + 1;
 
-imgq_1x2073600 = reshape(imgq_32400x64',[1,2073600]);
-imgq_1x2073600 = round(imgq_1x2073600);
+imgq_1x691200 = reshape(imgq_10800x64',[1,691200]);
+imgq_1x691200 = round(imgq_1x691200);
 
 %% header info
 % disp("header info")
 header_fid = fopen('img_header.hdr','wb');
-[imgR,imgC] = size(imgDouble_1080x1920);
+[imgR,imgC] = size(imgDouble_720x960);
 min_index = abs(min_index);
 fwrite(header_fid,[imgR imgC],'uint16');
 fwrite(header_fid,[quality min_index],'uint16');
@@ -81,15 +81,15 @@ fclose(header_fid);
 
 %% arith encoding
 % disp("arith encoding")
-minValue = min(imgq_1x2073600);
-maxValue = max(imgq_1x2073600);
+minValue = min(imgq_1x691200);
+maxValue = max(imgq_1x691200);
 counts = zeros(1,maxValue);
-for scan = 1:2073600
-    scanValue = imgq_1x2073600(scan);
+for scan = 1:691200
+    scanValue = imgq_1x691200(scan);
     counts(scanValue) = counts(scanValue) + 1;
 end
 counts(counts<1) = 1;
 save('dct_hist','counts');
-Nbits = encArith(imgq_1x2073600,'dct_hist',bitfile);
+Nbits = encArith(imgq_1x691200,'dct_hist',bitfile);
 
 clearvars -except Nbits;
