@@ -15,37 +15,42 @@ NbitsImg = encArith(imgq_1x921600,'dct_hist',bitfile);
 [rX,cX] = size(mvx);
 [rY,cY] = size(mvy);
 
-mvx = mvx+16;
-mvy = mvy+16;
+mvx = mvx+32;
+mvy = mvy+32;
 
-mvx_reshaped = reshape(mvx',[1,3600]);
-mvy_reshaped = reshape(mvy',[1,3600]);
+totalX = rX*cX;
+totalY = rY*cY;
+mvx_reshaped = reshape(mvx',[1,totalX]);
+mvy_reshaped = reshape(mvy',[1,totalY]);
 
 %MVX
 minValueMVX = min(mvx_reshaped);
 maxValueMVX = max(mvx_reshaped);
-countsMVX = zeros(1,maxValue);
-for scan = 1:3600
+counts = ones(1,maxValue);
+for scan = 1:totalX
     scanValue = mvx_reshaped(scan);
-    countsMVX(scanValue) = countsMVX(scanValue) + 1;
+    if scanValue == 0
+        scanValue = scanValue+1;
+    end
+    counts(scanValue) = counts(scanValue) + 1;
 end
-countsMVX(countsMVX<1) = 1;
-save('mvx_hist','countsMVX');
-
+counts(counts<1) = 1;
+save('mvx_hist','counts');
+NbitsMVX = encArith(mvx_reshaped,'mvx_hist',bitfileMVX);
 %MVY
 minValueMVY = min(mvy_reshaped);
 maxValueMVY = max(mvy_reshaped);
-countsMVY = zeros(1,maxValue);
-for scan = 1:3600
+counts = ones(1,maxValue);
+for scan = 1:totalX
     scanValue = mvy_reshaped(scan);
-    countsMVY(scanValue) = countsMVY(scanValue) + 1;
+    if scanValue == 0
+        scanValue = scanValue+1;
+    end
+    counts(scanValue) = counts(scanValue) + 1;
 end
-countsMVY(countsMVY<1) = 1;
-save('mvy_hist','countsMVY');
-
-NbitsMVX = encArith(mvx_reshaped,'mvx_hist',bitfileMVX);
+counts(counts<1) = 1;
+save('mvy_hist','counts');
 NbitsMVY = encArith(mvy_reshaped,'mvy_hist',bitfileMVY);
 
-
 %%Contcatinate bit files??
-clearvars -except Nbits;
+clearvars -except NbitsImg NbitsMVX NbitsMVY;

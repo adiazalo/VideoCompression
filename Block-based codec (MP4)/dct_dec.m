@@ -1,4 +1,12 @@
 function img_dec = dct_dec(imgq_dec_1x921600,outfile)
+header_fid = fopen('img_header.hdr','rb');
+header = fread(header_fid,'uint16');
+rows = header(1);
+cols = header(2);
+quality = header(3);
+min_index = (-1)*header(4);
+[qt, zag] = init_jpeg(quality);
+
 %% inverse shifting
 imgq_dec_14400x64 = reshape(imgq_dec_1x921600',[64,14400])';
 imgq_dec_14400x64 = imgq_dec_14400x64 - 1;

@@ -1,7 +1,8 @@
 function [mvx,mvy] = motion_estimation(prevInput, currInput, blkx, blky, search_range)
 [r,c] = size(prevInput);
+whos prevTemp
 if r == 1
-    disp("1 row")
+    disp(
     prevTemp = imread(prevInput);
     prev = rgb2gray(prevTemp);
 else

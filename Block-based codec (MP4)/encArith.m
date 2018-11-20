@@ -5,9 +5,9 @@ Nsymbols = length(message_int);
 %     disp("something else")
 % end  
 message_enc = arithenco(message_int,counts);
-Nbits = length(message_enc);
+Nbits = length(message_enc)
 
-outfile_fid = fopen(outfile,'wb');
+outfile_fid = fopen(outfile,'a');
 fwrite(outfile_fid,Nsymbols,'uint');
 fwrite(outfile_fid,message_enc,'ubit1');
 fclose(outfile_fid);

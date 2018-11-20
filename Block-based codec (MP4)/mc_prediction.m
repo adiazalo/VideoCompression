@@ -1,6 +1,12 @@
 function [mcpr,pred] = mc_prediction(prevInput,currInput,mvx,mvy)
-prevTemp = imread(prevInput);
-prev = rgb2gray(prevTemp);
+[r,c] = size(prevInput);
+if r == 1
+    disp("1 row")
+    prevTemp = imread(prevInput);
+    prev = rgb2gray(prevTemp);
+else
+    prev = prevInput;
+end
 
 currTemp = imread(currInput);
 curr = rgb2gray(currTemp);
@@ -35,7 +41,7 @@ while cIndex<cFrame
         %store previous blk in in same location where current blk is in curr
         pred(rIndex:rIndex+blky-1, cIndex:cIndex+blkx-1) = prevBlk;
         
-        %store the diff
+        %store the diff        
         mcpr(rIndex:rIndex+blky-1, cIndex:cIndex+blkx-1) = currBlk-prevBlk;
         
         n = n + 1;

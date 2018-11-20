@@ -68,4 +68,4 @@ fwrite(header_fid,[imgR imgC],'uint16');
 fwrite(header_fid,[quality min_index],'uint16');
 fclose(header_fid);
 
-clearvars -except Nbits;
+clearvars -except imgq_1x921600;
