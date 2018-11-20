@@ -1,17 +1,17 @@
 j=2;
 % disp("frameRate")
-[prev,frameRate] = read_MP4Frame('natalie.mp4',1);
+[prev,frameRate] = read_MP4Frame('natalieLowCut.mp4',1);
 
 % disp("outputVideo")
 outputVideo = VideoWriter('natalie_out.mp4','MPEG-4');%NEW
 outputVideo.FrameRate = frameRate;
 open(outputVideo);
 
-while j<5
-curr = read_MP4Frame('natalie.mp4',j); 
+while j< 300
+curr = read_MP4Frame('natalieLowCut.mp4',j); 
 
 % disp("motion_estimation")
-[mvx,mvy] = motion_estimation(prev, curr, 40, 40, 8);
+[mvx,mvy] = motion_estimation(prev, curr, 8, 8, 8);
 
 % disp("mc_prediction")
 [mcpr,pred] = mc_prediction(prev,curr,mvx,mvy);

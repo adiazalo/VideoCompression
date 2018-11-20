@@ -1,15 +1,15 @@
-function [NbitsImg,NbitsMVX,NbitsMVY] = entropyCoding(imgq_1x921600,mvx,mvy, bitfile,bitfileMVX,bitfileMVY)
+function [NbitsImg,NbitsMVX,NbitsMVY] = entropyCoding(imgq_1x230400,mvx,mvy, bitfile,bitfileMVX,bitfileMVY)
 %coding image
-minValue = min(imgq_1x921600);
-maxValue = max(imgq_1x921600);
+minValue = min(imgq_1x230400);
+maxValue = max(imgq_1x230400);
 counts = zeros(1,maxValue);
-for scan = 1:921600
-    scanValue = imgq_1x921600(scan);
+for scan = 1:230400
+    scanValue = imgq_1x230400(scan);
     counts(scanValue) = counts(scanValue) + 1;
 end
 counts(counts<1) = 1; 
 save('dct_hist','counts');
-NbitsImg = encArith(imgq_1x921600,'dct_hist',bitfile);
+NbitsImg = encArith(imgq_1x230400,'dct_hist',bitfile);
 
 %coding MV
 [rX,cX] = size(mvx);

@@ -1,7 +1,6 @@
 function [mvx,mvy] = motion_estimation(prevInput, currInput, blkx, blky, search_range)
 [r,c] = size(prevInput);
 if r == 1
-    disp("1 row")
     prevTemp = imread(prevInput);
     prev = rgb2gray(prevTemp);
 else
@@ -29,13 +28,13 @@ rIndex = 1;
 cIndex = 1;
 rWinIndex = 1;
 cWinIndex = 1;
-while cIndex<1280
-    while rIndex<720
+while cIndex<640
+    while rIndex<360
         %extract block from curr
         currBlk = curr(rIndex:rIndex+blky-1, cIndex:cIndex+blkx-1);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        while cWinIndex<1280
-            while rWinIndex<720
+        while cWinIndex<640
+            while rWinIndex<360
                 
                 % check if window is in range
                 if abs(rIndex-rWinIndex) <= search_range && abs(cIndex-cWinIndex) <= search_range

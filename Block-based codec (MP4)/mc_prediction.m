@@ -1,7 +1,6 @@
 function [mcpr,pred] = mc_prediction(prevInput,currInput,mvx,mvy)
 [r,c] = size(prevInput);
 if r == 1
-    disp("1 row")
     prevTemp = imread(prevInput);
     prev = rgb2gray(prevTemp);
 else
