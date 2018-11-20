@@ -14,13 +14,15 @@ curr = read_MP4Frame('natalie.mp4',j);
 disp("motion_estimation")
 [mvx,mvy] = motion_estimation(prev, curr, 16, 16, 16);
 
+
+
+
 disp("mc_prediction")
 [mcpr,pred] = mc_prediction(prev,curr,mvx,mvy);
 pred = uint8(pred);
 
 disp("image_dct_enc")
 img_enc = dct_enc(mcpr,50);
-
 disp("image_dct_dec")
 img_dec = dct_dec(img_enc,'frame_dec.jpg');
 reconst = img_dec + pred;
@@ -33,7 +35,7 @@ img = imread('natalie_reconst.jpg');
 writeVideo(outputVideo,img);
 prev = reconst;
 j=j+1
-end
+ end
 close(outputVideo);
 % k = mat2gray(reconst);
 % figure;

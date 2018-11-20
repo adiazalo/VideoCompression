@@ -1,20 +1,9 @@
-function image_dct_enc(infile,bitfile,quality)
+function imgq_1x921600 = dct_enc(infile,quality)
 [qt, zag] = init_jpeg(quality);
 imgDouble_720x1280 = imread(infile);
-%imgDouble_1080x1920 = rgb2gray(imgDouble_1080x1920_temp);
 imgDouble_720x1280 = double(imgDouble_720x1280) - 128;
 
 [imgR,imgC] = size(imgDouble_720x1280);
-
-% D = dctmtx(8); %Calculate the discrete cosine transform matrix
-% dct = @(block_struct) D * block_struct.data * D';
-
-%processes the image imgDouble by applying the function dct to each distinct block of size 8x8 and concatenating the results into the output matrix, B.
-%imgDTC_512x512 = blockproc(imgDouble_512x512,[8 8],dct); 
-
-% imshow(imgDouble_512x512);
-% h = imagesc(imgDTC_512x512);
-% impixelregion(h);al
 
 cIndex = 1;
 rIndex = 1;
@@ -78,18 +67,5 @@ min_index = abs(min_index);
 fwrite(header_fid,[imgR imgC],'uint16');
 fwrite(header_fid,[quality min_index],'uint16');
 fclose(header_fid);
-
-%% arith encoding
-% disp("arith encoding")
-minValue = min(imgq_1x921600);
-maxValue = max(imgq_1x921600);
-counts = zeros(1,maxValue);
-for scan = 1:921600
-    scanValue = imgq_1x921600(scan);
-    counts(scanValue) = counts(scanValue) + 1;
-end
-counts(counts<1) = 1;
-save('dct_hist','counts');
-Nbits = encArith(imgq_1x921600,'dct_hist',bitfile);
 
 clearvars -except Nbits;
