@@ -1,4 +1,5 @@
 function [mvx,mvy] = motion_estimation(prevInput, currInput, blkx, blky, search_range)
+whos prevInput
 [r,c] = size(prevInput);
 if r == 1
     prevTemp = imread(prevInput);

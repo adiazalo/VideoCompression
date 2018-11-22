@@ -1,6 +1,7 @@
 function imgq_1x230400 = dct_enc(infile,quality)
 [qt, zag] = init_jpeg(quality);
-imgDouble_360x640 = imread(infile);
+% imgDouble_360x640 = imread(infile);
+imgDouble_360x640 = infile;
 imgDouble_360x640 = double(imgDouble_360x640) - 128;
 
 [imgR,imgC] = size(imgDouble_360x640);

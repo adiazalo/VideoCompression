@@ -11,12 +11,12 @@ while j< 90
     curr = frame_read('natalieLowCut.mp4', 360, 640, j);
 
 % disp("motion_estimation")
-    % [mvx,mvy] = motion_estimation(prev, curr, 8, 8, 8);
-
+% [mvx,mvy] = motion_estimation(prev, curr, 8, 8, 8);
+% 
 % disp("mc_prediction")
-    % [mcpr,pred] = mc_prediction(prev,curr,mvx,mvy);
-    % pred = uint8(pred);
-    % whos prev curr
+% [mcpr,pred] = mc_prediction(prev,curr,mvx,mvy);
+% pred = uint8(pred);
+% whos prev curr
     [pred,mcpr,mvx,mvy]=blockmatching(prev,curr,8,8);
 
 % disp("image_dct_enc")
@@ -26,15 +26,15 @@ while j< 90
     img_dec = dct_dec(img_enc,'frame_dec.jpg');
     reconst = img_dec + pred;
 
-    [NbitsImg,NbitsMVX,NbitsMVY] = entropyCoding(img_enc,mvx,mvy, 'dct.bit','mvx.bit','mvy.bit');
+[NbitsImg,NbitsMVX,NbitsMVY] = entropyCoding(img_enc,mvx,mvy, 'dct.bit','mvx.bit','mvy.bit');
 
 % disp("writeVideo")
-    imwrite(reconst, 'natalie_reconst.jpg');
-    img = imread('natalie_reconst.jpg');
-    writeVideo(outputVideo,img);
-    prev = reconst;
-    prev = char(prev);
-    j=j+1
+imwrite(reconst, 'natalie_reconst.jpg');
+img = imread('natalie_reconst.jpg');
+writeVideo(outputVideo,img);
+prev = reconst;
+% prev = char(prev);
+j=j+1
 end
 close(outputVideo);
 % k = mat2gray(reconst);
