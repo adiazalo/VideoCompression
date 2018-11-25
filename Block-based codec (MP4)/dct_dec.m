@@ -1,12 +1,16 @@
 function img_dec = dct_dec(imgq_dec_1x230400,outfile)
+load('dct_hist.mat','counts');
 header_fid = fopen('img_header.hdr','rb');
 header = fread(header_fid,'uint16');
 rows = header(1);
 cols = header(2);
 quality = header(3);
 min_index = (-1)*header(4);
+
 [qt, zag] = init_jpeg(quality);
 
+% imgq_dec_921600x1 = decArith('dct_hist',bitfile);
+% imgq_dec_1x921600 = imgq_dec_921600x1';
 %% inverse shifting
 imgq_dec_3600x64 = reshape(imgq_dec_1x230400',[64,3600])';
 imgq_dec_3600x64 = imgq_dec_3600x64 - 1;
@@ -57,4 +61,3 @@ img_dec = uint8(img_dec+128);
 imwrite(img_dec,map, outfile);
 
 clearvars -except img_dec;
-

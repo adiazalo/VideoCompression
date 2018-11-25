@@ -6,9 +6,13 @@ if r == 1
 else
     prev = prevInput;
 end
-
-currTemp = imread(currInput);
-curr = rgb2gray(currTemp);
+[r,c] = size(currInput);
+if r == 1
+    currTemp = imread(currInput);
+    curr = rgb2gray(currTemp);
+else
+    curr = currInput;
+end
 [rFrame,cFrame] = size(curr);
 [rV,cV] = size(mvx);
 blky = rFrame/rV;

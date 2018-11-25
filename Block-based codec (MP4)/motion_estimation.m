@@ -7,9 +7,14 @@ if r == 1
 else
     prev = prevInput;
 end
+[r,c] = size(currInput);
+if r == 1
+    currTemp = imread(currInput);
+    curr = rgb2gray(currTemp);
+else
+    curr = currInput;
+end
 
-currTemp = imread(currInput);
-curr = rgb2gray(currTemp);
 [currFrRow, currFrCol] = size(curr);
 %SAD_Matrix = zeros(1+2*(search_range/blky),1+2*(search_range/blkx))
 SAD_Matrix = zeros(currFrRow/blky,currFrCol/blkx);
