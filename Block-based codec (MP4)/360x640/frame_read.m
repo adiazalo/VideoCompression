@@ -21,6 +21,6 @@ for t=1:nFrame
 end
 %%% for some reason it did not like to pass B 
 %%% Uncomment the line below to see the image/frame 
- figure;imshow(Frame);
+%  figure;imshow(Frame);
  imwrite(Frame,'frame.jpg');
 frame_Q = double(B);

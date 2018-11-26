@@ -1,4 +1,4 @@
-function [f_e, dfdx, mx, my]=blockmatching(f_r,f_t,N,M) 
+function [pred, mcpr, mx, my]=blockmatching(prev,curr,N,M) 
 %function [f_e dfd fd tot_sad tot_sado comp]=blockmatching(f_r,f_t,N,M)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% % %%%%%%%%%%Full Exhaustive Block Matching Motion Estimation Method%%% 
 % Inputs % f_r ---> Reference Image % f_t ---> Target Image % N ---> Block Size % M ---> Search Window 
@@ -15,16 +15,16 @@ function [f_e, dfdx, mx, my]=blockmatching(f_r,f_t,N,M)
 % f_r = mat2gray(f_r);  f_t = mat2gray(f_t); 
 
 %%%% original code line one line which is below %%%%%%
-f_r=double(f_r); f_t=double(f_t);
+prev=double(prev); curr=double(curr);
 
 % whos f_r f_t
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Determining the Image Size 
-[row col]=size(f_t); 
+[row col]=size(curr); 
 %Initializing a Estimated Image 
-f_e=zeros(row,col); f_e=double(f_e); a=1; b=1; 
+pred=zeros(row,col); pred=double(pred); a=1; b=1; 
 % f_e = mat2gray(f_e); %% this line added
 %Initiating the Total SAD variable 
 tot_sad=0; tot_sado=0; it=1; 
@@ -63,7 +63,7 @@ for i=1:N:row
                 end 
                 if(end_r_i<row && end_r_j<col && start_r_i>0 && start_r_j>0) 
                     %Calculating the SAD value for the current motion vector 
-                    dif=f_t(start_t_i:end_t_i,start_t_j:end_t_j)-f_r(start_r_i:end_r_i,start_r_j:end_r_j);
+                    dif=curr(start_t_i:end_t_i,start_t_j:end_t_j)-prev(start_r_i:end_r_i,start_r_j:end_r_j);
                     dif=abs(dif);
                     sadx=sum(sum(dif));
                     if(it==1)
@@ -87,7 +87,7 @@ for i=1:N:row
             v2_min=v2_mat(pos(1),1); 
         end
         %Calculating SAD(0) 
-        sado=abs(f_t(start_t_i:end_t_i,start_t_j:end_t_j)-f_r(start_t_i:end_t_i,start_t_j:end_t_j)); 
+        sado=abs(curr(start_t_i:end_t_i,start_t_j:end_t_j)-prev(start_t_i:end_t_i,start_t_j:end_t_j)); 
         sado=sum(sum(sado)); 
         tot_sado=tot_sado+sado;
         %Checking for the Threshold Condition 
@@ -138,16 +138,15 @@ for i=1:N:row
             end_t_i=start_t_i+N-1; 
             end_r_i=start_r_i+N-1; 
         end
-        f_e(start_t_i:end_t_i,start_t_j:end_t_j)=f_r(start_r_i:end_r_i,start_r_j:end_r_j); 
+        pred(start_t_i:end_t_i,start_t_j:end_t_j)=prev(start_r_i:end_r_i,start_r_j:end_r_j); 
     end
     b=1; 
     a=a+1;
 end
 %Getting the Displaced Difference Frame Image 
 % whos f_e f_t
-dfdx = f_t - f_e;
-dfd=imsubtract(f_e,f_t); 
-whos dfd
+mcpr = curr - pred;
+dfd=imsubtract(pred,curr); 
 % % Getting the minimum value so as to properly match -ve values for better 
 % % display 
 % 
@@ -177,9 +176,9 @@ whos dfd
 % ylabel('Rows'); 
 
 
-figure, imshow(mat2gray(f_e));
+% figure, imshow(mat2gray(pred));
 
-title('Predicted Image');
+% title('Predicted Image');
 % Vectors values 
 mx = V2; my=V1;
 

@@ -74,11 +74,8 @@ end
 
 % Differential Pulse Code Modulation (DPCM)
 for i=2:3600  
-         
-        imgq(i,1) = imgq(i) - imgq(i-1);  
-            
+        imgq(i,1) = imgq(i) - imgq(i-1);              
 end
-
 
 %shift all elements of imgq
 min_index = min(min(imgq));
