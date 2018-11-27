@@ -2,18 +2,19 @@ clc
 clear 
 close all
 mbSize = 8;
-p = 16;
+p = 32 ;
 index = 0;
-nFrames = 330;
+nFrames = 120;
 
     %%% uncomment to open video files
-writer = VideoWriter('natalie_S_A_D.avi','Grayscale AVI');
+writer = VideoWriter('natalie_SAD_Q50.avi','Grayscale AVI');
 writer.FrameRate = 30;                    
 open(writer);
 mse = zeros(1,nFrames);
 PSNR = zeros(1,nFrames);
 NbitsV = zeros(1,nFrames);
 bitFileBytes= zeros(1,nFrames);
+histFileBytes= zeros(1,nFrames);
           
 while index < nFrames
     
@@ -23,7 +24,7 @@ while index < nFrames
    %%% Read first frame once %%%%%%%%%%
     if index == 1
 %         disp('hello')
-        prev = frame_read('natalieLowCut.mp4', 360, 640, index);
+        prev = frame_read('natalieCutNew.mp4', 360, 640, index);
                 
     end
     
@@ -32,7 +33,7 @@ while index < nFrames
     
     %%%%%%%%%%%%%%%%%%% REad frames %%%%%%%%%%%%%%%%%
 %     prev = frame_read('natalie_2.mp4', 720, 1280, index);
-    curr = frame_read('natalieLowCut.mp4', 360, 640, index + 1);
+    curr = frame_read('natalieCutNew.mp4', 360, 640, index + 1);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         mse = immse(prev,curr);
         PSNR(1,index) = 10*log10((255^2)/mse);
@@ -48,7 +49,10 @@ while index < nFrames
 % % % %     %%%%%%%%%%%% DCT+Q + Enco && return imag to reconstruct prev %%%%
     [Nbits, img_back] = Enc_DCT_img(MCPR,'one.bit',50);
     NbitsV(1,index) = Nbits;
-    bitFileBytes(1,index)
+    s = dir('one.bit');
+    bitFileBytes(1,index) = s.bytes;
+    t = dir('dct_hist.mat');
+    histFileBytes(1,index) = t.bytes;
 % % % %     %%%%%%%% Q^-1 & IDCT for prev %%%%%%%%%%%%%%%%%
     img_Back = Qinv_IDCT(img_back);
 
@@ -102,5 +106,8 @@ while index < nFrames
     
 %     disp(index);
 end
-
+save PSNR_16_50 PSNR;
+save NbitsV_16_50 NbitsV;
+save bitFileBytes_16_50 bitFileBytes;
+save histFileBytes_16_50 histFileBytes;
   close(writer);
