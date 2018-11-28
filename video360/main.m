@@ -7,7 +7,7 @@ index = 0;
 nFrames = 120;
 
     %%% uncomment to open video files
-writer = VideoWriter('natalie_SAD_Q30.avi','Grayscale AVI');
+writer = VideoWriter('kristen_SAD_Q90.avi','Grayscale AVI');
 writer.FrameRate = 30;                    
 open(writer);
 mse = zeros(1,nFrames);
@@ -24,7 +24,7 @@ while index < nFrames
    %%% Read first frame once %%%%%%%%%%
     if index == 1
 %         disp('hello')
-        prev = frame_read('natalieCutNew.mp4', 360, 640, index);
+        prev = frame_read('kristenLowCut.mp4', 360, 640, index);
                 
     end
     
@@ -33,7 +33,7 @@ while index < nFrames
     
     %%%%%%%%%%%%%%%%%%% REad frames %%%%%%%%%%%%%%%%%
 %     prev = frame_read('natalie_2.mp4', 720, 1280, index);
-    curr = frame_read('natalieCutNew.mp4', 360, 640, index + 1);
+    curr = frame_read('kristenLowCut.mp4', 360, 640, index + 1);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         mse = immse(prev,curr);
         PSNR(1,index) = 10*log10((255^2)/mse);
@@ -47,7 +47,7 @@ while index < nFrames
 % % %     pred = mc_pred (prev, curr, mx,my,mbSize);
     
 % % % %     %%%%%%%%%%%% DCT+Q + Enco && return imag to reconstruct prev %%%%
-    [Nbits, img_back] = Enc_DCT_img(MCPR,'one.bit',30);
+    [Nbits, img_back] = Enc_DCT_img(MCPR,'one.bit',90);
     NbitsV(1,index) = Nbits;
     s = dir('one.bit');
     bitFileBytes(1,index) = s.bytes;
@@ -94,8 +94,8 @@ while index < nFrames
     else
     k = mat2gray(prev_dec);  
     end
-    imwrite(k, 'natalie_1_reconst.jpg');    
-    img = imread('natalie_1_reconst.jpg');
+    imwrite(k, 'kristen_1_reconst.jpg');    
+    img = imread('kristen_1_reconst.jpg');
     writeVideo(writer,img); 
     
     writeVideo(writer,k); 
@@ -106,8 +106,8 @@ while index < nFrames
     
 %     disp(index);
 end
-save PSNR_16_30 PSNR;
-save NbitsV_16_30 NbitsV;
-save bitFileBytes_16_30 bitFileBytes;
-save histFileBytes_16_30 histFileBytes;
+save PSNR_16_90 PSNR;
+save NbitsV_16_90 NbitsV;
+save bitFileBytes_16_90 bitFileBytes;
+save histFileBytes_16_90 histFileBytes;
   close(writer);
