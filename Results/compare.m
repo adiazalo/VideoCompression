@@ -43,7 +43,28 @@ legend({'Exhaustive SAD +/-32','Exhaustive SAD +/-16','Exhaustive MAD +/-16','Di
 
 
 
+%PSNR per frame
+x_frames = 1:120;
 
+% E_SAD_16_90 = 
+% 
+% E_MAD_16_90 = 
+% 
+% D_SAD_16_90 = load(fullfile('kristen', 'Diamond', 'SAD','16-90','PSNR_D_16_90.mat'));
+% 
+% D_MAD_16_90 = load(fullfile('kristen', 'Diamond', 'MAD','16-90','PSNR_D_16_90.mat'));
+
+ 
+
+plot(x_frames,E_SAD_16_90,'r-o',x_frames, E_MAD_16_90,'b-o',x_frames, D_SAD_16_90,'g-s',x_frames, D_MAD_16_90,'c-s')
+xlabel('Frame Number');
+ylabel('PSNR (dB)');
+title('PSNR per Frame at Quality 90');
+legend({'Exhaustive SAD +/-16','Exhaustive MAD +/-16','Diamond SAD +/-16','Diamond MAD +/-16','Location','southeast'});
+
+
+% use load(fullfile('kristen', 'Diamond',
+% 'MAD','16-90','PSNR_D_16_90.mat')) to load files
 
 
 

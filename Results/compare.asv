@@ -28,17 +28,35 @@ y_E_SAD_16 = [30.5048 34.5283 36.3889 37.0878];
 x_E_MAD_16 = [3709.464 3892.761 4080.904 5203.849];
 y_E_MAD_16 = [30.6042 34.5126 36.3876 37.0924];
 
-x_D_SAD_16 = [
+x_D_SAD_16 = [3732.883 3913.247 4124.75 5292.953];
 y_D_SAD_16 = [30.0985 33.9035 35.6144 36.2757];
 
+x_D_MAD_16 = [3732.629 3910.304 4125.478 5300.371];
+y_D_MAD_16 = [30.0995 33.9068 35.616 36.275];
 
-plot(x_E_SAD_32,y_E_SAD_32,'r-o',x_E_SAD_16, y_E_SAD_16,'b-o',x_E_MAD_16, y_E_MAD_16,'g-o')
+plot(x_E_SAD_32,y_E_SAD_32,'r-o',x_E_SAD_16, y_E_SAD_16,'b-o',x_E_MAD_16, y_E_MAD_16,'g-o',x_D_SAD_16, y_D_SAD_16,'c-s',x_D_MAD_16, y_D_MAD_16,'m-s')
 xlabel('Total number of bytes (KB)');
 ylabel('PSNR (dB)');
 title('Operational rate-distortion curves');
-legend({'Exhaustive SAD +/-32','Exhaustive SAD +/-16','Exhaustive MAD +/-16'},'Location','southeast')
+legend({'Exhaustive SAD +/-32','Exhaustive SAD +/-16','Exhaustive MAD +/-16','Diamond SAD +/-16','Diamond MAD +/-16'},'Location','southeast')
 
+x_frames = 1:120;
 
+% E_SAD_16_90 = 
+% 
+% E_MAD_16_90 = 
+% 
+% D_SAD_16_90 = 
+% 
+% D_MAD_16_90 = 
+
+ 
+
+plot(x_frames,E_SAD_16_90,'r-o',x_frames, E_MAD_16_90,'b-o',x_frames, D_SAD_16_90,'g-s',x_frames, D_MAD_16_90,'c-s')
+xlabel('Frame Number');
+ylabel('PSNR (dB)');
+title('PSNR per Frame at Quality 90');
+legend({'Exhaustive SAD +/-16','Exhaustive MAD +/-16','Diamond SAD +/-16','Diamond MAD +/-16','Location','southeast'});
 
 
 
